@@ -53,7 +53,7 @@ app.post(
     if (!id) {
       return res.status(400).json({ error: "id is required" });
     }
-    const secret = await registerUserOrg1(id, token);
+    const secret = await registerUserOrg1(id, req.token);
     return res.status(201).json({
       message: `Successfully register ${id}`,
       secret: secret,
