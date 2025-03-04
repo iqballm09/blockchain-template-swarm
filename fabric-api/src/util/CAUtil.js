@@ -109,7 +109,6 @@ export const enrollUser = async (
     // Enroll the user, and import the new identity into the wallet.
     const userExist = await wallet.get(userId)
     if (userExist) {
-      console.log(`User ${userId} is already enrolled.`)
       return generateToken(userId)
     }
     const enrollment = await caClient.enroll({
@@ -125,7 +124,6 @@ export const enrollUser = async (
       type: "X.509",
     };
     await wallet.put(userId, x509Identity);
-    console.log(`User ${userId} enrolled successfully`)
     return generateToken(userId);
   } catch (error) {
     console.error(`Failed to enroll user : ${error}`);
