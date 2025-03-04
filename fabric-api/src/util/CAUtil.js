@@ -105,9 +105,13 @@ export const enrollUser = async (
   userPasswd,
   orgMspId
 ) => {
-  const token = generateToken(userId);
   try {
     // Enroll the user, and import the new identity into the wallet.
+    const userExist = await wallet.get(userId)
+    if (userExist) {
+      console.log(`User ${userId} is already enrolled.`)
+      return generateToken(userId)
+    }
     const enrollment = await caClient.enroll({
       enrollmentID: userId,
       enrollmentSecret: userPasswd,
@@ -121,14 +125,9 @@ export const enrollUser = async (
       type: "X.509",
     };
     await wallet.put(userId, x509Identity);
-
-    return token;
+    console.log(`User ${userId} enrolled successfully`)
+    return generateToken(userId);
   } catch (error) {
-    const match = String(error).match(/code: (\d+)/);
-    if (match && match[1] === 20) {
-      return token;
-    } else {
-      console.error(`Failed to enroll user : ${error}`);
-    }
+    console.error(`Failed to enroll user : ${error}`);
   }
 };
