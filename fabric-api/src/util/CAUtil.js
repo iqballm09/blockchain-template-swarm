@@ -21,10 +21,8 @@ export const buildCAClient = (FabricCAServices, ccp, caHostName) => {
   // Create a new CA client for interacting with the CA.
   const caInfo = ccp.certificateAuthorities[caHostName]; //lookup CA details from config
   const caTLSCACerts = caInfo.tlsCACerts.pem;
-  // const caInfoUrl = caInfo.url
-  const caInfoUrl = "https://172.28.129.194:7054"; // if using real IP, remove this line and uncomment line above
   const caClient = new FabricCAServices(
-    caInfoUrl,
+    caInfo.url,
     { trustedRoots: caTLSCACerts, verify: false },
     caInfo.caName
   );
@@ -126,7 +124,7 @@ export const enrollUser = async (
 
     return token;
   } catch (error) {
-    const match = error.match(/code: (\d+)/);
+    const match = String(error).match(/code: (\d+)/);
     if (match && match[1] === 20) {
       return token;
     } else {
