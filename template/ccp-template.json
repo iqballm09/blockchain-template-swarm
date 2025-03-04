@@ -32,7 +32,7 @@
   },
   "certificateAuthorities": {
     "${CA_ORG_DOMAIN}": {
-      "url": "https://${PEER_ORG_HOST_IPADDRESS}:${CA_PORT}",
+      "url": "https://${CA_ORG_DOMAIN}:${CA_PORT}",
       "caName": "ca-${ORGNAME}",
       "tlsCACerts": {
         "pem": ["${CAPEM}"]
