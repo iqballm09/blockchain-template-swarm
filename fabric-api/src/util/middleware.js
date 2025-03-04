@@ -33,15 +33,14 @@ export const checkTokenExpired = (req, res, next) => {
   let expiredIn = -1;
 
   // Get ID from token
-  const id = token.split("-").pop();
+  const id = req.token.split("-").pop();
   // Read file synchronously
   const data = fs.readFileSync(tokenFilePath, "utf-8");
   const jsonData = JSON.parse(data);
 
   // Search for matching token and set expiredIn if found
   jsonData.forEach((row) => {
-    if (row["id"] === id && row["token"] === token) {
-      console.log(row);
+    if (row["id"] === id && row["token"] === req.token) {
       expiredIn = row["expiredIn"];
     }
   });
