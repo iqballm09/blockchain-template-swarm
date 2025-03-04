@@ -45,8 +45,6 @@ export const checkTokenExpired = (req, res, next) => {
     }
   });
 
-  console.log(expiredIn);
-
   // Check if token is expired
   const timeNow = Math.floor(Date.now() / 1000);
   if (timeNow > expiredIn) {
