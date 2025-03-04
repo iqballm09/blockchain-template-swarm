@@ -46,7 +46,6 @@ export async function registerUserOrg1(userId, tokenAdmin) {
     userId,
     peer0Org1Affl
   );
-  console.log(`secret of ${userId}: ${secret}`);
   // save user info
   updateFileToken({
     id: userId,
